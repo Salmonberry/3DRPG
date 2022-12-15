@@ -1,15 +1,24 @@
-using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-[Serializable]
 public class MouseEventOnScreenClicked : UnityEvent<Vector3>
 {
 }
 
 public class MouseEventManager : MonoBehaviour
 {
-    public MouseEventOnScreenClicked mouseEventOnScreenClicked;
+    private MouseEventOnScreenClicked mouseEventOnScreenClicked;
+
+    private void Start()
+    {
+        mouseEventOnScreenClicked = new MouseEventOnScreenClicked();
+        Player[] players = FindObjectsOfType<Player>();
+
+        foreach (Player player in players)
+        {
+            mouseEventOnScreenClicked.AddListener(player.Report);
+        }
+    }
 
     void Update()
     {
